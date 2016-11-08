@@ -24,3 +24,9 @@ describe('carLeft', function(){
     });
   });
 });
+
+describe('draw', function(){
+  var carleft = new CarLeft({});
+
+  it.skip('should call drawImage on the canvas')
+})
