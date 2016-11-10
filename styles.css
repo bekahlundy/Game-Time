@@ -4,7 +4,6 @@ html {
 
 .game-canvas {
   border: 1px solid;
-  margin: auto;
   display: block;
 }
 
@@ -57,3 +56,10 @@ html {
    text-align: center;
    width: 90px;
  }
+img {
+  width:0;
+}
+
+audio {
+  display: none;
+}
