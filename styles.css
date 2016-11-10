@@ -9,11 +9,11 @@ html {
 
 
 #splashScreen, #finishScreen {
-     margin: 0 auto;
-     text-align:center;
-     width:500px;
-     height: 600px;
-     border: 2px solid black;
+  border: 2px solid black;
+  height: 600px;
+  margin: 0 auto;
+  text-align:center;
+  width:500px;
  }
 
  #splashScreen {
@@ -41,8 +41,8 @@ html {
  }
 
  .home-btn, .try-again-btn {
-   margin-top: 300px;
    margin-left: 20px;
+   margin-top: 300px;
  }
 
  .start-btn:hover, .home-btn:hover, .try-again-btn:hover {
@@ -50,9 +50,9 @@ html {
    border: none;
    border-radius: 10px;
    color: #000000;
-   height: 50px;
    font-family: 'Coiny', cursive;
    font-size: 25px;
+   height: 50px;
    text-align: center;
    width: 90px;
  }
