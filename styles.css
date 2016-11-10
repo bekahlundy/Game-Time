@@ -4,6 +4,7 @@ html {
 
 .game-canvas {
   border: 1px solid;
+  margin: auto;
   display: block;
 }
 
@@ -29,9 +30,9 @@ html {
    border: none;
    border-radius: 10px;
    color: #000000;
-   height: 50px;
    font-family: 'Coiny', cursive;
    font-size: 25px;
+   height: 50px;
    text-align: center;
    width: 90px;
  }
@@ -41,8 +42,8 @@ html {
  }
 
  .home-btn, .try-again-btn {
-   margin-left: 20px;
    margin-top: 300px;
+   margin-left: 20px;
  }
 
  .start-btn:hover, .home-btn:hover, .try-again-btn:hover {
