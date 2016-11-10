@@ -3,7 +3,7 @@ const assert = chai.assert;
 
 const Frog = require('../lib/frog.js')
 
-describe('Frog', function(){
+describe('frog', function(){
   context('with default attributes.', function(){
     var frog = new Frog({});
 
@@ -22,13 +22,15 @@ describe('Frog', function(){
     it('should assign a width', function(){
       assert.equal(this.width);
     });
+  });
+});
 
-    describe('moveRight', function(){
-      var frog = new Frog({});
+describe('moveright', function() {
+  var frog = new Frog({});
 
-      it('should increment the dingus by 1', function(){
-        assert.equal(dingus.x, 0);
-        dingus.scoot();
-        assert.equal(dingus.x, 57);
-      });
-    });
+  it('should increment the dingus by 1', function() {
+    assert.equal(frog.x, );
+    frog.moveRight();
+    assert.equal(frog.x, 30);
+  });
+});
