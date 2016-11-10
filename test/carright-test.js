@@ -22,5 +22,9 @@ describe('carRight', function(){
     it('should assign a width', function(){
       assert.equal(this.width);
     });
+    it('should have a method draw', function(){
+      var carright = new CarRight();
+      assert.isFunction(carright.draw);
+    });
   });
 });

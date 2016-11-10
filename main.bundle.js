@@ -44,78 +44,176 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	$(function() {
+	    $('#myCanvas').hide();
+	    $('#finishScreen').hide();
+	    $('#splashScreen').show();
+	    startGameScreen();
+	});
+
+	function startGameScreen() {
+	  playIntro();
+	  $('.start-btn').on('click', function() {
+	    $('#splashScreen').hide();
+	    $('#myCanvas').show();
+	    playMain();
+	});
+	}
+
+	function endGameScreen() {
+	  playDead();
+	  $('#myCanvas').hide();
+	  $('#splashScreen').hide();
+	  $('#finishScreen').show();
+	  clickTryAgain();
+	  clickHome();
+	}
+
+	function clickTryAgain() {
+	  $('.try-again-btn').on('click', function() {
+	    resetCanvas();
+	  });
+	}
+
+	function clickHome() {
+	$('.home-btn').on('click', function() {
+	  document.location.reload(true);
+	});
+	}
+
+
 	var Frog = __webpack_require__(1);
 	var CarLeft = __webpack_require__(2);
 	var CarRight = __webpack_require__(3);
-
+	var Score = __webpack_require__(4);
+	var FinishLine = __webpack_require__(5);
 
 	var canvas = document.getElementById('myCanvas');
 	var context = canvas.getContext('2d');
 
-	var frog = new Frog((canvas.width-25)/2, (canvas.height-55), 35 , 35, canvas)
+
+	var score = new Score();
+	var frog = new Frog((canvas.width-35)/2, (canvas.height-55), 35 , 35, canvas);
+	var frogs = [];
+	var frog1 = new Frog(470, 570, 25 , 25, canvas);
+	var frog2 = new Frog(435, 570, 25 , 25, canvas);
+	var frog3 = new Frog(400, 570, 25 , 25, canvas);
+
 
 	var frogImg = document.getElementById("frog-img");
 	var taxiLeft = document.getElementById("taxi-left");
 	var taxiRight = document.getElementById("taxi-right");
+	var splashScreenAudio = document.getElementById('happy-music');
+	var gameOverAudio = document.getElementById('end-music');
+	var jumpAudio = document.getElementById('jump-music');
+
+	function playMain() {
+	  splashScreenAudio.play();
+	  gameOverAudio.pause();
+	}
+
+	function playIntro() {
+	splashScreenAudio.play();
+	gameOverAudio.pause();
+	}
+
+	function playDead() {
+	  gameOverAudio.play();
+	  splashScreenAudio.pause();
+	}
 
 
-	var carLeftSeven = [];
-	carLeftSeven.push(new CarLeft(600, 96, 50, 50));
-	carLeftSeven.push(new CarLeft(470, 96, 50, 50));
-	carLeftSeven.push(new CarLeft(230, 96, 50, 50));
-	carLeftSeven.push(new CarLeft(280, 96, 50, 50));
+	function winCollision () {
+	  if (frog.y < 95) {
+	    incrementSpeeds();
+	    sendToFrontReset();
+	  }
+	}
 
-	var carRightSix = [];
-	carRightSix.push(new CarRight(600, 151, 50, 50));
-	carRightSix.push(new CarRight(470, 151, 50, 50));
-	carRightSix.push(new CarRight(230, 151, 50, 50));
-	carRightSix.push(new CarRight(280, 151, 50, 50));
+	function incrementSpeeds(){
+	  carLeft.forEach(function(car) {
+	    car.vx = car.vx + '.5';
+	  });
+	  carRight.forEach(function(car){
+	    car.vx = car.vx + '.5';
+	  });
+	}
 
-	var carLeftFive = [];
-	carLeftFive.push(new CarLeft(220, 206, 70, 50));
-	carLeftFive.push(new CarLeft(420, 206, 70, 50));
-	carLeftFive.push(new CarLeft(520, 206, 70, 50));
+	function resetCanvas() {
+	  frog.x = (canvas.width-35)/2;
+	  frog.y = canvas.height - 55;
+	  updateScore -= updateScore;
+	  lives = 3;
+	  frog3.width = 25;
+	  frog2.width = 25;
+	  carLeft.forEach(function(car) {
+	    car.vx = 1;
+	  });
+	  carRight.forEach(function(car) {
+	    car.vx = 1;
+	  });
+	  playMain();
+	  $('#finishScreen').hide();
+	  $("#myCanvas").show();
+	}
 
-	var carRightFour = [];
-	carRightFour.push(new CarRight(600, 317.5, 50, 50));
-	carRightFour.push(new CarRight(470, 317.5, 50, 50));
-	carRightFour.push(new CarRight(230, 317.5, 50, 50));
-	carRightFour.push(new CarRight(280, 317.5, 50, 50));
+	function sendToFrontReset() {
+	  frog.x = (canvas.width-35)/2;
+	  frog.y = canvas.height - 55;
+	  $('#finishScreen').hide();
+	  $("#myCanvas").show();
+	}
 
-	var carLeftThree = [];
-	carLeftThree.push(new CarLeft(120, 372.5, 100, 50));
-	carLeftThree.push(new CarLeft(320, 372.5, 100, 50));
-	carLeftThree.push(new CarLeft(520, 372.5, 100, 50));
+	var carLeft = [];
+	var carRight = [];
 
-	var carRightTwo = [];
-	carRightTwo.push(new CarRight(550, 427.5, 50, 50));
-	carRightTwo.push(new CarRight(450, 427.5, 50, 50));
-	carRightTwo.push(new CarRight(250, 427.5, 50, 50));
-	carRightTwo.push(new CarRight(150, 427.5, 50, 50));
+	carLeft.push(new CarLeft(600, 96, 1, 50, 50));
+	carLeft.push(new CarLeft(470, 96, 1, 50, 50));
+	carLeft.push(new CarLeft(230, 96, 1, 50, 50));
+	carLeft.push(new CarLeft(280, 96, 1, 50, 50));
 
-	var carLeftOne = [];
-	carLeftOne.push(new CarLeft(550, 482.5, 50, 50));
-	carLeftOne.push(new CarLeft(450, 482.5, 50, 50));
-	carLeftOne.push(new CarLeft(250, 482.5, 50, 50));
-	carLeftOne.push(new CarLeft(150, 482.5, 50, 50));
+	carRight.push(new CarRight(600, 151, 1, 50, 50));
+	carRight.push(new CarRight(470, 151, 1, 50, 50));
+	carRight.push(new CarRight(230, 151, 1, 50, 50));
+	carRight.push(new CarRight(280, 151, 1, 50, 50));
+
+	carLeft.push(new CarLeft(220, 206, 1, 70, 50));
+	carLeft.push(new CarLeft(420, 206, 1, 70, 50));
+	carLeft.push(new CarLeft(520, 206, 1, 70, 50));
+
+	carRight.push(new CarRight(600, 317.5, 1, 50, 50));
+	carRight.push(new CarRight(470, 317.5, 1, 50, 50));
+	carRight.push(new CarRight(230, 317.5, 1, 50, 50));
+	carRight.push(new CarRight(280, 317.5, 1, 50, 50));
+
+	carLeft.push(new CarLeft(120, 372.5, 1, 100, 50));
+	carLeft.push(new CarLeft(320, 372.5, 1, 100, 50));
+	carLeft.push(new CarLeft(520, 372.5, 1, 100, 50));
+
+	carRight.push(new CarRight(550, 427.5, 1, 50, 50));
+	carRight.push(new CarRight(450, 427.5, 1, 50, 50));
+	carRight.push(new CarRight(250, 427.5, 1, 50, 50));
+	carRight.push(new CarRight(150, 427.5, 1, 50, 50));
+
+	carLeft.push(new CarLeft(550, 482.5, 1, 50, 50));
+	carLeft.push(new CarLeft(450, 482.5, 1, 50, 50));
+	carLeft.push(new CarLeft(250, 482.5, 1, 50, 50));
+	carLeft.push(new CarLeft(150, 482.5, 1, 50, 50));
 
 	var rightPressed = false;
 	var leftPressed = false;
 	var upPressed = false;
 	var downPressed = false;
 
-	// var score = 0;
-	//
-	// function drawScore(context) {
-	//     context.font = "16px Arial";
-	//     context.fillStyle = "#0095DD";
-	//     context.fillText("Score: "+score, 8, 20);
-	// }
+	var updateScore = 0;
+
 
 	document.addEventListener("keydown", keyDownHandler, false);
 	document.addEventListener("keyup", keyUpHandler, false);
 
 	function keyDownHandler(event) {
+
+	  event.preventDefault();
 
 	  if (event.keyCode === 39) {
 	    if(rightPressed === false) {
@@ -126,6 +224,7 @@
 	  } else if (event.keyCode === 37) {
 	      if (leftPressed === false) {
 	        frog.moveLeft();
+
 	        leftPressed = true;
 	      }
 
@@ -133,12 +232,14 @@
 	    if (upPressed === false) {
 	      frog.moveUp();
 	      upPressed = true;
+	      return updateScore += 10;
 	    }
 
 	  } else if (event.keyCode === 40) {
 	    if (downPressed === false) {
 	      frog.moveDown();
 	      downPressed = true;
+	      return updateScore -= 10;
 	    }
 	  }
 	}
@@ -155,14 +256,31 @@
 	  }
 	}
 
+	var lives = 3;
+
 	function collideCar(car){
 	  if (frog.x < car.x + car.width &&
-	   frog.x + frog.width > car.x &&
-	   frog.y < car.y + car.height &&
-	   frog.height + frog.y > car.y) {
-	     document.location.reload(true);
+	    frog.x + frog.width > car.x &&
+	    frog.y < car.y + car.height &&
+	    frog.height + frog.y > car.y) {
+	      lives --;
+	      decreaseLives();
 	  }
 	}
+
+
+	function decreaseLives() {
+	  if (lives === 2) {
+	    frog3.width = 0;
+	    sendToFrontReset();
+	  } else if (lives === 1) {
+	    frog2.width = 0;
+	    sendToFrontReset();
+	  } else if (lives === 0) {
+	    endGameScreen();
+	  }
+	}
+
 
 	function drawLeftCar(carArray, taxiImage) {
 	  carArray.forEach(function(car) {
@@ -171,7 +289,7 @@
 	  carArray.forEach(function(car) {
 	    car.moveLeft(context);
 	    collideCar(car);
-	  })
+	  });
 	}
 
 	function drawRightCar(carArray, taxiImage) {
@@ -181,223 +299,28 @@
 	  carArray.forEach(function(car) {
 	    car.moveRight(context);
 	    collideCar(car);
-	  })
+	  });
 	}
 
 	function moveCars() {
-	  drawLeftCar(carLeftSeven, taxiLeft);
-	  drawRightCar(carRightSix, taxiRight);
-	  drawLeftCar(carLeftFive, taxiLeft);
-	  drawRightCar(carRightFour, taxiRight);
-	  drawLeftCar(carLeftThree, taxiLeft);
-	  drawRightCar(carRightTwo, taxiRight);
-	  drawLeftCar(carLeftOne, taxiLeft);
+	  drawLeftCar(carLeft, taxiLeft);
+	  drawRightCar(carRight, taxiRight);
 	}
 
 	requestAnimationFrame(function gameLoop() {
 	  context.clearRect(0, 0, canvas.width, canvas.height);
 	  frog.drawFrog(context, frogImg);
+	  frogs.forEach(function(frogs, i){
+	     frogs.drawFrog(context, frogImg);
+	   });
+	  frog1.drawFrog(context, frogImg);
+	  frog2.drawFrog(context, frogImg);
+	  frog3.drawFrog(context, frogImg);
+	  winCollision();
 	  moveCars();
 	  requestAnimationFrame(gameLoop);
+	  score.draw(context, updateScore);
 	});
-
-
-
-
-
-
-	// var carRightTen = [];
-	// carRightTen.push(new CarRight(100, 132.5, 100, 50));
-	// carRightTen.push(new CarRight(500, 132.5, 100, 50));
-	// carRightTen.push(new CarRight(300, 132.5, 100, 50));
-	//
-	// var carLeftNine = [];
-	// carLeftNine.push(new CarLeft(550, 187.5, 50, 50));
-	// carLeftNine.push(new CarLeft(450, 187.5, 50, 50));
-	// carLeftNine.push(new CarLeft(250, 187.5, 50, 50));
-	// carLeftNine.push(new CarLeft(150, 187.5, 50, 50));
-	//
-	// var carRightEight = [];
-	// carRightEight.push(new CarRight(120, 32.5, 70, 50));
-	// carRightEight.push(new CarRight(320, 32.5, 70, 50));
-	// carRightEight.push(new CarRight(520, 32.5, 70, 50));
-
-
-	// drawRightCar(carRightEight, taxiRight);
-	// drawLeftCar(carLeftNine, taxiLeft);
-	// drawRightCar(carRightTen, taxiRight);
-
-
-	// var Frog = require('./frog.js');
-	// var CarLeft = require('./carleft.js');
-	// var CarRight = require('./carright.js');
-	//
-	//
-	// var canvas = document.getElementById('myCanvas');
-	// var context = canvas.getContext('2d');
-	//
-	// var frog = new Frog((canvas.width-25)/2, (canvas.height-62.5), 50, 50, canvas)
-	//
-	// var frogImg = document.getElementById("frog-img");
-	// var taxiLeft = document.getElementById("taxi-left");
-	// var taxiRight = document.getElementById("taxi-right");
-	//
-	//
-	// var carRightTen = [];
-	// carRightTen.push(new CarRight(100, 132.5, 100, 50));
-	// carRightTen.push(new CarRight(500, 132.5, 100, 50));
-	// carRightTen.push(new CarRight(300, 132.5, 100, 50));
-	//
-	// var carLeftNine = [];
-	// carLeftNine.push(new CarLeft(550, 187.5, 50, 50));
-	// carLeftNine.push(new CarLeft(450, 187.5, 50, 50));
-	// carLeftNine.push(new CarLeft(250, 187.5, 50, 50));
-	// carLeftNine.push(new CarLeft(150, 187.5, 50, 50));
-	//
-	// var carRightEight = [];
-	// carRightEight.push(new CarRight(120, 242.5, 70, 50));
-	// carRightEight.push(new CarRight(320, 242.5, 70, 50));
-	// carRightEight.push(new CarRight(520, 242.5, 70, 50));
-	//
-	// var carLeftSeven = [];
-	// carLeftSeven.push(new CarLeft(600, 297.5, 50, 50));
-	// carLeftSeven.push(new CarLeft(470, 297.5, 50, 50));
-	// carLeftSeven.push(new CarLeft(230, 297.5, 50, 50));
-	// carLeftSeven.push(new CarLeft(280, 297.5, 50, 50));
-	//
-	// var carRightSix = [];
-	// carRightSix.push(new CarRight(600, 352.5, 50, 50));
-	// carRightSix.push(new CarRight(470, 352.5, 50, 50));
-	// carRightSix.push(new CarRight(230, 352.5, 50, 50));
-	// carRightSix.push(new CarRight(280, 352.5, 50, 50));
-	//
-	// var carLeftFive = [];
-	// carLeftFive.push(new CarLeft(220, 462.5, 70, 50));
-	// carLeftFive.push(new CarLeft(420, 462.5, 70, 50));
-	// carLeftFive.push(new CarLeft(520, 462.5, 70, 50));
-	//
-	// var carRightFour = [];
-	// carRightFour.push(new CarRight(600, 517.5, 50, 50));
-	// carRightFour.push(new CarRight(470, 517.5, 50, 50));
-	// carRightFour.push(new CarRight(230, 517.5, 50, 50));
-	// carRightFour.push(new CarRight(280, 517.5, 50, 50));
-	//
-	// var carLeftThree = [];
-	// carLeftThree.push(new CarLeft(120, 572.5, 100, 50));
-	// carLeftThree.push(new CarLeft(320, 572.5, 100, 50));
-	// carLeftThree.push(new CarLeft(520, 572.5, 100, 50));
-	//
-	// var carRightTwo = [];
-	// carRightTwo.push(new CarRight(550, 625, 50, 50));
-	// carRightTwo.push(new CarRight(450, 625, 50, 50));
-	// carRightTwo.push(new CarRight(250, 625, 50, 50));
-	// carRightTwo.push(new CarRight(150, 625, 50, 50));
-	//
-	// var carLeftOne = [];
-	// carLeftOne.push(new CarLeft(550, 682.5, 50, 50));
-	// carLeftOne.push(new CarLeft(450, 682.5, 50, 50));
-	// carLeftOne.push(new CarLeft(250, 682.5, 50, 50));
-	// carLeftOne.push(new CarLeft(150, 682.5, 50, 50));
-	//
-	// var rightPressed = false;
-	// var leftPressed = false;
-	// var upPressed = false;
-	// var downPressed = false;
-	//
-	//
-	//
-	// document.addEventListener("keydown", keyDownHandler, false);
-	// document.addEventListener("keyup", keyUpHandler, false);
-	//
-	// function keyDownHandler(event) {
-	//
-	//   if (event.keyCode === 39) {
-	//     if(rightPressed === false) {
-	//       frog.moveRight();
-	//       rightPressed = true;
-	//     }
-	//
-	//   } else if (event.keyCode === 37) {
-	//       if (leftPressed === false) {
-	//         frog.moveLeft();
-	//         leftPressed = true;
-	//       }
-	//
-	//   } else if (event.keyCode === 38) {
-	//     if (upPressed === false) {
-	//       frog.moveUp();
-	//       upPressed = true;
-	//     }
-	//
-	//   } else if (event.keyCode === 40) {
-	//     if (downPressed === false) {
-	//       frog.moveDown();
-	//       downPressed = true;
-	//     }
-	//   }
-	// }
-	//
-	// function keyUpHandler(event) {
-	//   if (event.keyCode === 39) {
-	//     rightPressed = false;
-	//   } else if (event.keyCode === 37) {
-	//     leftPressed = false;
-	//   } else if (event.keyCode === 38) {
-	//     upPressed = false;
-	//   } else if (event.keyCode === 40) {
-	//     downPressed = false;
-	//   }
-	// }
-	//
-	// function collideCar(car){
-	//   if (frog.x < car.x + car.width &&
-	//    frog.x + frog.width > car.x &&
-	//    frog.y < car.y + car.height &&
-	//    frog.height + frog.y > car.y) {
-	//      document.location.reload(true);
-	//      console.log("game over");
-	//   }
-	// }
-	//
-	// function drawLeftCar(carArray, taxiImage) {
-	//   carArray.forEach(function(car) {
-	//     car.draw(context, taxiImage);
-	//   });
-	//   carArray.forEach(function(car) {
-	//     car.moveLeft(context);
-	//     collideCar(car);
-	//   })
-	// }
-	//
-	// function drawRightCar(carArray, taxiImage) {
-	//   carArray.forEach(function(car) {
-	//     car.draw(context, taxiImage);
-	//   });
-	//   carArray.forEach(function(car) {
-	//     car.moveRight(context);
-	//     collideCar(car);
-	//   })
-	// }
-	//
-	// function moveCars() {
-	//   drawLeftCar(carLeftOne, taxiLeft);
-	//   drawLeftCar(carLeftThree, taxiLeft);
-	//   drawLeftCar(carLeftFive, taxiLeft);
-	//   drawLeftCar(carLeftSeven, taxiLeft);
-	//   drawLeftCar(carLeftNine, taxiLeft);
-	//   drawRightCar(carRightTwo, taxiRight);
-	//   drawRightCar(carRightFour, taxiRight);
-	//   drawRightCar(carRightSix, taxiRight);
-	//   drawRightCar(carRightEight, taxiRight);
-	//   drawRightCar(carRightTen, taxiRight);
-	// }
-	//
-	// requestAnimationFrame(function gameLoop() {
-	//   context.clearRect(0, 0, canvas.width, canvas.height);
-	//   frog.drawFrog(context, frogImg);
-	//   moveCars();
-	//   requestAnimationFrame(gameLoop);
-	// });
 
 
 /***/ },
@@ -421,48 +344,49 @@
 	  context.fillStyle = "transparent";
 	  context.fill();
 	  context.closePath();
-	}
+	};
 
 	Frog.prototype.moveRight = function(){
 	  if(this.canMoveRight()){
-	    this.x +=55;
+	    this.x +=30;
+
 	  }
-	}
+	};
 
 	Frog.prototype.canMoveRight = function(){
-	  return this.x < this.canvas.width-this.height
-	}
+	  return this.x < this.canvas.width-this.width*2;
+	};
 
 
 	Frog.prototype.moveLeft = function(){
 	  if(this.canMoveLeft()){
-	    this.x -=55;
+	    this.x -=30;
 	  }
-	}
+	};
 
 	Frog.prototype.canMoveLeft = function(){
-	  return this.x > 0;
-	}
+	  return this.x > (0 + this.width);
+	};
 
 	Frog.prototype.moveUp = function(){
 	  if(this.canMoveUp()){
 	    this.y -= 55;
 	  }
-	}
+	};
 
 	Frog.prototype.canMoveUp = function(){
 	  return this.y > 0;
-	}
+	};
 
 	Frog.prototype.moveDown = function(){
 	  if(this.canMoveDown()){
 	    this.y += 55;
 	  }
-	}
+	};
 
 	Frog.prototype.canMoveDown = function(){
-	  return this.y < this.canvas.height-this.height
-	}
+	  return this.y < this.canvas.height-this.height*2;
+	};
 
 
 
@@ -473,16 +397,17 @@
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Index = __webpack_require__(1)
-	var carRight = __webpack_require__(3)
+	var Frog = __webpack_require__(1);
+	var carRight = __webpack_require__(3);
 
-	function CarLeft (x, y, width, height){
+	function CarLeft (x, y, vx, width, height){
 	 this.x = x;
 	 this.y = y;
+	 this.vx = vx;
 	 this.width = width;
 	 this.height = height;
 	}
-	 
+
 	CarLeft.prototype.draw = function(context, taxiLeft) {
 	  context.fillStyle = 'transparent';
 	context.drawImage(taxiLeft, this.x, this.y, this.width, this.height);
@@ -491,11 +416,12 @@
 
 	CarLeft.prototype.moveLeft =
 	function(context) {
+	  this.x -= this.vx;
 	  if (this.x < (0 - this.width)) {
 	    this.x = 600 + this.width;
+	    return this;
 	  }
-	  this.x--;
-	}
+	};
 
 	module.exports = CarLeft;
 
@@ -504,12 +430,13 @@
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Index = __webpack_require__(1)
+	var Frog = __webpack_require__(1);
 	var carLeft = __webpack_require__(2);
 
-	function CarRight(x, y, width, height){
+	function CarRight(x, y, vx, width, height){
 	  this.x = x;
 	  this.y = y;
+	  this.vx = vx;
 	  this.width = width;
 	  this.height = height;
 	}
@@ -522,13 +449,57 @@
 
 	CarRight.prototype.moveRight =
 	function(context) {
+	  this.x += this.vx;
 	  if (this.x > 600) {
 	    this.x = (0 - this.width);
+	    return this;
 	  }
-	  this.x++;
-	}
+	};
 
 	module.exports = CarRight;
+
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	function Score(){
+
+	}
+
+	Score.prototype.draw = function(context, updateScore) {
+	  context.fillStyle = "white";
+	  context.font = ('20px Krungthep');
+	  context.fillText('Score:' + updateScore, 5, 590);
+	  return this;
+	};
+
+	module.exports = Score;
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports) {
+
+	// var Index = require('./frog.js')
+	//
+	// function FinishLine(x, y, width, height, canvas){
+	//   this.x = x;
+	//   this.y = y;
+	//   this.width = width;
+	//   this.height = height;
+	//   this.canvas = canvas;
+	// }
+	//
+	// FinishLine.prototype.drawFinish = function(context) {
+	//   context.beginPath();
+	//   context.fillRect( this.x, this.y, this.width, this.height);
+	//   context.fillStyle = 'black';
+	//   context.fill();
+	//   context.closePath();
+	// }
+	//
+	// module.exports = FinishLine;
 
 
 /***/ }
