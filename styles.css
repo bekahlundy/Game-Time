@@ -1,3 +1,7 @@
+html {
+  background-color: white;
+}
+
 .game-canvas {
   border: 1px solid;
   margin: auto;
