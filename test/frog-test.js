@@ -7,6 +7,14 @@ describe('Frog', function(){
   context('with default attributes.', function(){
     var frog = new Frog({});
 
+
+
+
+
+
+
+
+
     it('should assign an x coordinate', function() {
       assert.equal(this.x);
     });
@@ -21,14 +29,4 @@ describe('Frog', function(){
 
     it('should assign a width', function(){
       assert.equal(this.width);
-    });
-
-    describe('moveRight', function(){
-      var frog = new Frog({});
-
-      it('should increment the dingus by 1', function(){
-        assert.equal(dingus.x, 0);
-        dingus.scoot();
-        assert.equal(dingus.x, 57);
-      });
     });
