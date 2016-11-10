@@ -37,6 +37,22 @@ describe('frog', function(){
     it('should have a method canMoveLeft', function(){
       var frog = new Frog();
       assert.isFunction(frog.canMoveLeft);
+    });
+    it('should have a mehod moveUp', function(){
+      var frog = new Frog();
+      assert.isFunction(frog.moveUp);
+    });
+    it('shoudld have a method canMoveUp', function(){
+      var frog = new Frog();
+      assert.isFunction(frog.canMoveUp);
+    });
+    it('should have a method moveDown', function(){
+      var frog = new Frog();
+      assert.isFunction(frog.moveDown);
+    });
+    it('should have a method canMoveDown', function(){
+      var frog = new Frog();
+      assert.isFunction(frog.canMoveDown);
     })
   });
 });
