@@ -47,6 +47,7 @@
 	$(function() {
 	    $('#myCanvas').hide();
 	    $('#finishScreen').hide();
+	    $('#winScreen').hide();
 	    $('#splashScreen').show();
 	    startGameScreen();
 	});
@@ -55,6 +56,7 @@
 	  playIntro();
 	  $('.start-btn').on('click', function() {
 	    $('#splashScreen').hide();
+	    $('#winScreen').hide();
 	    $('#myCanvas').show();
 	    playMain();
 	});
@@ -64,9 +66,33 @@
 	  playDead();
 	  $('#myCanvas').hide();
 	  $('#splashScreen').hide();
+	  $('#winScreen').hide();
 	  $('#finishScreen').show();
 	  clickTryAgain();
 	  clickHome();
+	}
+
+	function winGameScreen() {
+	  //playwinmusic
+	  $('#myCanvas').hide();
+	  $('#splashScreen').hide();
+	  $('#winScreen').show();
+	  $('#finishScreen').hide();
+	  clickTryAgainWin();
+	  clickHomeWin();
+	}
+
+	function clickTryAgainWin() {
+	  $('.win-try-again-btn').on('click', function() {
+	    resetCanvas();
+	    $('#winScreen').hide();
+	  });
+	}
+
+	function clickHomeWin() {
+	$('.win-home-btn').on('click', function() {
+	  document.location.reload(true);
+	});
 	}
 
 	function clickTryAgain() {
@@ -86,13 +112,14 @@
 	var CarLeft = __webpack_require__(2);
 	var CarRight = __webpack_require__(3);
 	var Score = __webpack_require__(4);
-	var FinishLine = __webpack_require__(5);
+	var Level = __webpack_require__(5);
 
 	var canvas = document.getElementById('myCanvas');
 	var context = canvas.getContext('2d');
 
 
 	var score = new Score();
+	var level = new Level();
 	var frog = new Frog((canvas.width-35)/2, (canvas.height-55), 35 , 35, canvas);
 	var frogs = [];
 	var frog1 = new Frog(470, 570, 25 , 25, canvas);
@@ -125,17 +152,24 @@
 
 	function winCollision () {
 	  if (frog.y < 95) {
-	    incrementSpeeds();
-	    sendToFrontReset();
+	    if(updateLevel === 3) {
+	      $('#myCanvas').hide();
+	      $('#winScreen').show();
+	    } else {
+	      incrementSpeeds();
+	      updateLevel++;
+	      sendToFrontReset();
+	    }
+	    winGameScreen();
 	  }
 	}
 
 	function incrementSpeeds(){
 	  carLeft.forEach(function(car) {
-	    car.vx = car.vx + '.5';
+	    car.vx = car.vx + .5;
 	  });
 	  carRight.forEach(function(car){
-	    car.vx = car.vx + '.5';
+	    car.vx = car.vx + .5;
 	  });
 	}
 
@@ -143,6 +177,7 @@
 	  frog.x = (canvas.width-35)/2;
 	  frog.y = canvas.height - 55;
 	  updateScore -= updateScore;
+	  updateLevel -= updateLevel;
 	  lives = 3;
 	  frog3.width = 25;
 	  frog2.width = 25;
@@ -206,6 +241,7 @@
 	var downPressed = false;
 
 	var updateScore = 0;
+	var updateLevel = 1;
 
 
 	document.addEventListener("keydown", keyDownHandler, false);
@@ -320,6 +356,7 @@
 	  moveCars();
 	  requestAnimationFrame(gameLoop);
 	  score.draw(context, updateScore);
+	  level.draw(context, updateLevel);
 	});
 
 
@@ -349,7 +386,6 @@
 	Frog.prototype.moveRight = function(){
 	  if(this.canMoveRight()){
 	    this.x +=30;
-
 	  }
 	};
 
@@ -481,25 +517,18 @@
 /* 5 */
 /***/ function(module, exports) {
 
-	// var Index = require('./frog.js')
-	//
-	// function FinishLine(x, y, width, height, canvas){
-	//   this.x = x;
-	//   this.y = y;
-	//   this.width = width;
-	//   this.height = height;
-	//   this.canvas = canvas;
-	// }
-	//
-	// FinishLine.prototype.drawFinish = function(context) {
-	//   context.beginPath();
-	//   context.fillRect( this.x, this.y, this.width, this.height);
-	//   context.fillStyle = 'black';
-	//   context.fill();
-	//   context.closePath();
-	// }
-	//
-	// module.exports = FinishLine;
+	function Level(){
+
+	}
+
+	Level.prototype.draw = function(context, updateLevel) {
+	  context.fillStyle = "white";
+	  context.font = ('20px Krungthep');
+	  context.fillText('Level:' + updateLevel, 5, 20);
+	  return this;
+	};
+
+	module.exports = Level;
 
 
 /***/ }
