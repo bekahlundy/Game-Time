@@ -588,10 +588,16 @@
 /* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 	__webpack_require__(16);
 	__webpack_require__(57);
 	__webpack_require__(58);
 	// require('./play-test.js');
+=======
+	__webpack_require__(15);
+	__webpack_require__(56);
+	__webpack_require__(57);
+>>>>>>> 4f3d1c59e7ebcb6c15f3719ca5fa3fadab66c433
 
 
 /***/ },
@@ -8968,8 +8974,87 @@
 	      var carright = new CarRight();
 	      assert.isFunction(carright.draw);
 	    });
+<<<<<<< HEAD
+=======
 	  });
 	});
+
+
+/***/ },
+/* 57 */
+/***/ function(module, exports, __webpack_require__) {
+
+	const chai = __webpack_require__(16);
+	const assert = chai.assert;
+
+	const Frog = __webpack_require__(1)
+
+	describe('frog', function(){
+	  context('with default attributes.', function(){
+	    var frog = new Frog();
+
+	    it('should assign an x coordinate', function() {
+	      assert.equal(this.x);
+	    });
+
+	    it('should assign a y coordinate', function() {
+	      assert.equal(this.y);
+	    });
+
+	    it('should assign a height', function(){
+	      assert.equal(this.height);
+	    });
+
+	    it('should assign a width', function(){
+	      assert.equal(this.width);
+	    });
+	    it('should have a method moveRight', function(){
+	      var frog = new Frog();
+	      assert.isFunction(frog.moveRight);
+	    });
+	    it('should have a method canMoveRight', function(){
+	      var frog = new Frog();
+	      assert.isFunction(frog.canMoveRight);
+	    });
+	    it('should have a method moveLeft', function(){
+	      var frog = new Frog();
+	      assert.isFunction(frog.moveLeft);
+	    });
+	    it('should have a method canMoveLeft', function(){
+	      var frog = new Frog();
+	      assert.isFunction(frog.canMoveLeft);
+	    });
+	    it('should have a mehod moveUp', function(){
+	      var frog = new Frog();
+	      assert.isFunction(frog.moveUp);
+	    });
+	    it('shoudld have a method canMoveUp', function(){
+	      var frog = new Frog();
+	      assert.isFunction(frog.canMoveUp);
+	    });
+	    it('should have a method moveDown', function(){
+	      var frog = new Frog();
+	      assert.isFunction(frog.moveDown);
+	    });
+	    it('should have a method canMoveDown', function(){
+	      var frog = new Frog();
+	      assert.isFunction(frog.canMoveDown);
+	    })
+>>>>>>> 4f3d1c59e7ebcb6c15f3719ca5fa3fadab66c433
+	  });
+	});
+
+
+
+	// it('moveright', function() {
+	//   var frog = new Frog({});
+	//
+	//   it('should increment the frog by 30', function() {
+	//     assert.equal(frog.x, 232.5 );
+	//     frog.moveRight();
+	//     assert.equal(frog.x, 262.5);
+	//   });
+	// });
 
 
 /***/ },

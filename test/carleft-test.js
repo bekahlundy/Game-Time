@@ -25,6 +25,6 @@ describe('carLeft', function(){
     it('should have a method draw', function(){
       var carleft = new CarLeft();
       assert.isFunction(carleft.draw);
-    })
+    });
   });
 });

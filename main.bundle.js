@@ -116,6 +116,7 @@
 	var FinishLine = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./finish.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	var Play = __webpack_require__(6);
 
+
 	var canvas = document.getElementById('myCanvas');
 	var context = canvas.getContext('2d');
 
@@ -535,7 +536,7 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports) {
+// /***/ function(module, exports) {
 
 	// function playMain() {
 	//   splashScreenAudio.play();
@@ -554,6 +555,6 @@
 	//
 	// module.exports = Play;
 
-
-/***/ }
-/******/ ]);
+// 
+// /***/ }
+// /******/ ]);
