@@ -53,8 +53,20 @@ describe('frog', function(){
     it('should have a method canMoveDown', function(){
       var frog = new Frog();
       assert.isFunction(frog.canMoveDown);
-    })
+    });
   });
+  describe('with default attributes', function() {
+  var frog = new Frog({});
+
+  it('should increment the x frog by 30', function() {
+    assert.equal(frog.x, 232.5);
+    frog.moveRight();
+    assert.equal(frog.x, 262.5);
+  });
+  it('should check if able to move right', function() {
+    var frog = new Frog();
+  });
+});
 });
 
 
