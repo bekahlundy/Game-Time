@@ -1,5 +1,5 @@
 html {
-  background-image: url('/images/skylinebg.svg');
+  background-image: url('skylinebg.svg');
 }
 
 .game-canvas {
@@ -18,15 +18,15 @@ html {
  }
 
  #splashScreen {
-   background-image: url('/images/froggersplashScreen.svg');
+   background-image: url('froggersplashScreen.svg');
  }
 
  #finishScreen {
-   background-image: url('/images/froggerFinishScreen.svg');
+   background-image: url('froggerFinishScreen.svg');
  }
 
  #winScreen {
-    background-image: url('/images/winScreen.svg');
+    background-image: url('winScreen.svg');
  }
 
  .start-btn, .home-btn, .try-again-btn, .win-try-again-btn, .win-home-btn{
