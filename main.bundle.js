@@ -73,7 +73,7 @@
 	}
 
 	function winGameScreen() {
-	  //playwinmusic
+	  winAudio.play();
 	  $('#myCanvas').hide();
 	  $('#splashScreen').hide();
 	  $('#winScreen').show();
@@ -132,39 +132,47 @@
 	var taxiRight = document.getElementById("taxi-right");
 	var splashScreenAudio = document.getElementById('happy-music');
 	var gameOverAudio = document.getElementById('end-music');
-	var jumpAudio = document.getElementById('jump-music');
+	var winAudio = document.getElementById('win-music');
 
 	function playMain() {
 	  splashScreenAudio.play();
 	  gameOverAudio.pause();
+	  winAudio.pause();
 	}
 
 	function playIntro() {
 	splashScreenAudio.play();
 	gameOverAudio.pause();
+	winAudio.pause();
 	}
 
 	function playDead() {
 	  gameOverAudio.play();
 	  splashScreenAudio.pause();
+	  winAudio.pause();
 	}
 
+	function playWin() {
+	  gameOverAudio.pause();
+	  splashScreenAudio.pause();
+	  winAudio.play();
+	}
 
-	function winCollision () {
+	function winCollision() {
 	  if (frog.y < 95) {
 	    if(updateLevel === 3) {
 	      $('#myCanvas').hide();
 	      $('#winScreen').show();
+	      winGameScreen();
 	    } else {
 	      incrementSpeeds();
 	      updateLevel++;
 	      sendToFrontReset();
 	    }
-	    winGameScreen();
 	  }
 	}
 
-	function incrementSpeeds(){
+	function incrementSpeeds() {
 	  carLeft.forEach(function(car) {
 	    car.vx = car.vx + .5;
 	  });
